@@ -1,5 +1,6 @@
 import { Router } from 'express' 
 import model from '../../model'
+import { validateCreate, validateUpdate } from './validation'
 
 const router = new Router()
 
@@ -19,17 +20,9 @@ router.get('/:id', async (req, res, next) => {
   res.status(404).json({ message: 'Not found' })
 })
 
-router.post('/', async (req, res, next) => {
-  const isName = 'name' in req.body;
-  const isEmail = 'email' in req.body;
-  const isPhone = 'phone' in req.body;
-  
-  if ( isName && isEmail && isPhone ) {
-    const newContact = await model.addContact(req.body)
-    return res.status(201).json(newContact)
-  }
-  
-  res.status(400).json({"message": "missing required name field"})
+router.post('/', validateCreate, async (req, res, next) => {
+  const newContact = await model.addContact(req.body)
+  res.status(201).json(newContact)
 })
 
 router.delete('/:id', async (req, res, next) => {
@@ -43,7 +36,7 @@ router.delete('/:id', async (req, res, next) => {
   res.status(404).json({ message: 'Not found' })
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', validateUpdate, async (req, res, next) => {
   const { id } = req.params
   const updateContact = await model.updateContact(id, req.body)
   res.status(200).json(updateContact)
