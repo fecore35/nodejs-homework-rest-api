@@ -3,7 +3,7 @@ import path from "path"
 import { fileURLToPath } from 'url'
 import { randomUUID } from "crypto"
 
-import contacts from './contacts.json'
+import contacts from '../db/contacts.json'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -25,7 +25,7 @@ const removeContact = async (contactId) => {
 
   const [ result ] = contacts.splice(index, 1)
   await fs.writeFile(
-    path.join(__dirname, "contacts.json"),
+    path.join(__dirname, "../db", "contacts.json"),
     JSON.stringify(contacts, null, 2)
   )
   return result;
@@ -36,7 +36,7 @@ const addContact = async (body) => {
 
   contacts.push(newContact)
   await fs.writeFile(
-    path.join(__dirname, "contacts.json"),
+    path.join(__dirname, "../db", "contacts.json"),
     JSON.stringify(contacts, null, 2)
   )
   return newContact
@@ -52,7 +52,7 @@ const updateContact = async (contactId, body) => {
   const updateContact = { id:contactId, ...contacts[index], ...body }
   contacts[index] = updateContact
   await fs.writeFile(
-    path.join(__dirname, "contacts.json"),
+    path.join(__dirname, "../db", "contacts.json"),
     JSON.stringify(contacts, null, 2)
   )
   return updateContact;
