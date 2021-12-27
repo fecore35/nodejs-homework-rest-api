@@ -6,7 +6,7 @@ import {
   deleteContact,
   putContact
 } from '../../controllers/contacts'
-import { validateCreate, validateUpdate } from './validation'
+import { validateCreate, validateUpdate } from '../../midllewares/validation/contactValidation'
 
 const router = new Router()
 
