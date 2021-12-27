@@ -1,17 +1,23 @@
 import { Router } from 'express' 
-import model from '../../model'
+import {
+  addContact,
+  listContacts,
+  getContactById,
+  updateContact,
+  removeContact
+} from '../../models/contacts'
 import { validateCreate, validateUpdate } from './validation'
 
 const router = new Router()
 
 router.get('/', async (req, res, next) => {
-  const contacts = await model.listContacts()
+  const contacts = await listContacts()
   res.status(200).json(contacts)
 })
 
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params
-  const contact = await model.getContactById(id)
+  const contact = await getContactById(id)
 
   if (contact) {
     return res.status(200).json(contact)
@@ -21,13 +27,13 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', validateCreate, async (req, res, next) => {
-  const newContact = await model.addContact(req.body)
+  const newContact = await addContact(req.body)
   res.status(201).json(newContact)
 })
 
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params
-  const contact = await model.removeContact(id)
+  const contact = await removeContact(id)
 
   if (contact) {
     return res.status(200).json({"message": "contact deleted"})
@@ -38,8 +44,8 @@ router.delete('/:id', async (req, res, next) => {
 
 router.put('/:id', validateUpdate, async (req, res, next) => {
   const { id } = req.params
-  const updateContact = await model.updateContact(id, req.body)
-  res.status(200).json(updateContact)
+  const contact = await updateContact(id, req.body)
+  res.status(200).json(contact)
 })
 
 export default router
