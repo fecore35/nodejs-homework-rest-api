@@ -1,5 +1,5 @@
-import app from '../app'
-import db from '../db'
+import app from "../app"
+import db from "../db"
 
 const PORT = process.env.PORT || 3000
 

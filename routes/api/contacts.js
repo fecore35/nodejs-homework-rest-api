@@ -12,11 +12,12 @@ import {
   validateCreate,
   validateUpdate,
   validateUpdateFavorite,
+  validateQuery,
 } from "../../midllewares/validation/contactValidation"
 
 const router = new Router()
 
-router.get("/", getAllContacts)
+router.get("/", validateQuery, getAllContacts)
 
 router.get("/:id", validateId, getOneContact)
 
