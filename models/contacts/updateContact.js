@@ -1,17 +1,16 @@
-import writeContacts from "./writeContacts"
-import contacts from '../../db/contacts.json'
+import { ObjectId } from 'mongodb'
+import db from "../../db"
+import getCollection from '../../db/getCollection'
 
 const updateContact = async (contactId, body) => {
-  const index = contacts.findIndex((contact) => contact.id === contactId)
-
-  if (index === -1 ) {
-    return null
-  }
-
-  const updateContact = { id:contactId, ...contacts[index], ...body }
-  contacts[index] = updateContact
-  await writeContacts(contacts)
-  return updateContact
+  const collection = await getCollection(db, "contacts")
+  const id = ObjectId(contactId)
+  const { value: result } = await collection.findOneAndUpdate(
+    { _id: id }, 
+    { $set: body },
+    { returnDocument: "after" },
+  )
+  return result
 }
 
 export default updateContact

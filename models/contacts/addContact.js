@@ -1,13 +1,15 @@
-import { randomUUID } from "crypto"
-import writeContacts from "./writeContacts"
-import contacts from '../../db/contacts.json'
+import db from "../../db"
+import getCollection from '../../db/getCollection'
 
 const addContact = async (body) => {
-  const newContact = { id: randomUUID(), ...body}
-
-  contacts.push(newContact)
-  await writeContacts(contacts)
-  return newContact
+  const collection = await getCollection(db, "contacts")
+  const newContact = { 
+    ...body, 
+    favorite: false 
+  }
+  const result = await collection.insertOne(newContact)
+  
+  return result
 }
 
 export default addContact

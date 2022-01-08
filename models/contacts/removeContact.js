@@ -1,16 +1,12 @@
-import writeContacts from "./writeContacts"
-import contacts from '../../db/contacts.json'
+import { ObjectId } from 'mongodb'
+import db from "../../db"
+import getCollection from '../../db/getCollection'
 
 const removeContact = async (contactId) => {
-  const index = contacts.findIndex((contact) => contact.id === contactId)
-
-  if (index === -1 ) {
-    return null
-  }
-
-  const [ result ] = contacts.splice(index, 1)
-  await writeContacts(contacts)
-  return result;
+  const collection = await getCollection(db, "contacts")
+  const id = ObjectId(contactId)
+  const { value: result } = await collection.findOneAndDelete({ _id: id })
+  return result
 }
 
 export default removeContact
