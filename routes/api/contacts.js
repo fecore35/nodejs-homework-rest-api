@@ -8,6 +8,7 @@ import {
   updateStatusContact,
 } from "../../controllers/contacts"
 import {
+  validateId,
   validateCreate,
   validateUpdate,
   validateUpdateFavorite,
@@ -17,14 +18,18 @@ const router = new Router()
 
 router.get("/", getAllContacts)
 
-router.get("/:id", getOneContact)
+router.get("/:id", validateId, getOneContact)
 
 router.post("/", validateCreate, postContact)
 
-router.delete("/:id", deleteContact)
+router.delete("/:id", validateId, deleteContact)
 
-router.put("/:id", validateUpdate, putContact)
+router.put("/:id", [validateId, validateUpdate], putContact)
 
-router.patch("/:id/favorite", validateUpdateFavorite, updateStatusContact)
+router.patch(
+  "/:id/favorite",
+  [validateId, validateUpdateFavorite],
+  updateStatusContact
+)
 
 export default router

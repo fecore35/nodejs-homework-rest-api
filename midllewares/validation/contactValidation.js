@@ -1,4 +1,7 @@
 import Joi from "joi"
+import pkg from "mongoose"
+
+const { Types } = pkg
 
 const createSchema = Joi.object({
   name: Joi.string().required(),
@@ -55,6 +58,13 @@ export const validateUpdateFavorite = async (req, res, next) => {
         .json({ message: `missing field favorite` })
     }
     return res.status(400).json({ message: error.message })
+  }
+  next()
+}
+
+export const validateId = async (req, res, next) => {
+  if (!Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).json({ message: "Invalid ObjectId" })
   }
   next()
 }
