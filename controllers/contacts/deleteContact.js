@@ -1,4 +1,4 @@
-import { removeContact } from '../../models/contacts'
+import { removeContact } from '../../repository/contacts'
 
 const deleteContact = async (req, res, _next) => {
   const { id } = req.params

@@ -1,4 +1,4 @@
-import { listContacts } from "../../models/contacts"
+import { listContacts } from "../../repository/contacts"
 
 const getAllContacts = async (_req, res, _next) => {
   const contacts = await listContacts()

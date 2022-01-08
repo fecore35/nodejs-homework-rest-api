@@ -1,4 +1,4 @@
-import { updateContact } from '../../models/contacts'
+import { updateContact } from '../../repository/contacts'
 
 const putContact = async (req, res, _next) => {
   const { id } = req.params

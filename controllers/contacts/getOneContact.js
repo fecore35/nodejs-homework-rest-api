@@ -1,4 +1,4 @@
-import { getContactById } from '../../models/contacts'
+import { getContactById } from '../../repository/contacts'
 
 const getOneContact = async (req, res, _next) => {
   const { id } = req.params

@@ -1,4 +1,4 @@
-import { addContact } from '../../models/contacts'
+import { addContact } from '../../repository/contacts'
 
 const postContact = async (req, res, _next) => {
   const newContact = await addContact(req.body)
