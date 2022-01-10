@@ -1,7 +1,7 @@
 import { updateContact } from "../../repository/contacts"
 import { HttpCode } from "../../lib/contacts"
 
-const putContact = async (req, res, _next) => {
+const updateStatusContact = async (req, res, _next) => {
   const { id } = req.params
   const contact = await updateContact(id, req.body)
   if (contact) {
@@ -14,4 +14,4 @@ const putContact = async (req, res, _next) => {
     .json({ status: "error", code: HttpCode.NOT_FOUND, message: "Not found" })
 }
 
-export default putContact
+export default updateStatusContact

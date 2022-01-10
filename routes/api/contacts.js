@@ -1,23 +1,36 @@
-import { Router } from 'express' 
-import { 
-  getAllContacts, 
+import { Router } from "express"
+import {
+  getAllContacts,
   getOneContact,
   postContact,
   deleteContact,
-  putContact
-} from '../../controllers/contacts'
-import { validateCreate, validateUpdate } from '../../midllewares/validation/contactValidation'
+  putContact,
+  updateStatusContact,
+} from "../../controllers/contacts"
+import {
+  validateId,
+  validateCreate,
+  validateUpdate,
+  validateUpdateFavorite,
+  validateQuery,
+} from "../../midllewares/validation/contactValidation"
 
 const router = new Router()
 
-router.get('/', getAllContacts)
+router.get("/", validateQuery, getAllContacts)
 
-router.get('/:id', getOneContact)
+router.get("/:id", validateId, getOneContact)
 
-router.post('/', validateCreate, postContact)
+router.post("/", validateCreate, postContact)
 
-router.delete('/:id', deleteContact)
+router.delete("/:id", validateId, deleteContact)
 
-router.put('/:id', validateUpdate, putContact)
+router.put("/:id", [validateId, validateUpdate], putContact)
+
+router.patch(
+  "/:id/favorite",
+  [validateId, validateUpdateFavorite],
+  updateStatusContact
+)
 
 export default router

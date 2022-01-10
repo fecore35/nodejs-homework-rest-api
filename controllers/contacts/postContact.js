@@ -1,8 +1,13 @@
-import { addContact } from '../../models/contacts'
+import { addContact } from "../../repository/contacts"
+import { HttpCode } from "../../lib/contacts"
 
 const postContact = async (req, res, _next) => {
   const newContact = await addContact(req.body)
-  res.status(201).json(newContact)
+  res.status(HttpCode.CREATED).json({
+    status: "success",
+    code: HttpCode.OK,
+    data: { contact: newContact },
+  })
 }
 
 export default postContact
