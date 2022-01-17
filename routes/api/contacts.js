@@ -13,8 +13,8 @@ import {
   validateUpdate,
   validateUpdateFavorite,
   validateQuery,
-} from "../../middleware/validation/contactValidation"
-import guard from "../../middleware/guard"
+} from "../../middlewares/validation/contactValidation"
+import guard from "../../middlewares/guard"
 
 const router = new Router()
 
