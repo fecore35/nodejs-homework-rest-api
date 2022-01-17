@@ -14,22 +14,23 @@ import {
   validateUpdateFavorite,
   validateQuery,
 } from "../../midllewares/validation/contactValidation"
+import guard from "../../midllewares/guard"
 
 const router = new Router()
 
-router.get("/", validateQuery, getAllContacts)
+router.get("/", [guard, validateQuery], getAllContacts)
 
-router.get("/:id", validateId, getOneContact)
+router.get("/:id", [guard, validateId], getOneContact)
 
-router.post("/", validateCreate, postContact)
+router.post("/", [guard, validateCreate], postContact)
 
-router.delete("/:id", validateId, deleteContact)
+router.delete("/:id", [guard, validateId], deleteContact)
 
-router.put("/:id", [validateId, validateUpdate], putContact)
+router.put("/:id", [guard, validateId, validateUpdate], putContact)
 
 router.patch(
   "/:id/favorite",
-  [validateId, validateUpdateFavorite],
+  [guard, validateId, validateUpdateFavorite],
   updateStatusContact
 )
 
