@@ -3,7 +3,8 @@ import { HttpCode } from "../../lib/contacts"
 
 const getOneContact = async (req, res, _next) => {
   const { id } = req.params
-  const contact = await getContactById(id)
+  const { id: userId } = res.locals.user
+  const contact = await getContactById(userId, id)
 
   if (contact) {
     return res

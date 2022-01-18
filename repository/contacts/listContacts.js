@@ -1,15 +1,15 @@
 import Contact from "../../models/contact"
 
-const listContacts = async ({
-  sortBy,
-  sortByDesc,
-  filter,
-  limit = 10,
-  skip = 0,
-}) => {
+const listContacts = async (
+  userId,
+  { sortBy, sortByDesc, filter, limit = 10, skip = 0 }
+) => {
   let sortCriteria = null
-  const total = await Contact.find().countDocuments()
-  let result = Contact.find()
+  const total = await Contact.find({ owner: userId }).countDocuments()
+  let result = Contact.find({ owner: userId }).populate({
+    path: "owner",
+    select: "email subscription",
+  })
 
   if (sortBy) {
     sortCriteria = { [`${sortBy}`]: 1 }
