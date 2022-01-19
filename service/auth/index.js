@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { findByEmail, updateToken } from "../../repository/auth"
+import { findByEmail, findById, updateToken } from "../../repository/auth"
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 class AuthService {
@@ -28,6 +28,10 @@ class AuthService {
 
   async saveToken(id, token) {
     await updateToken(id, token)
+  }
+
+  async getCurrentUser(id) {
+    return await findById(id)
   }
 }
 
