@@ -1,12 +1,5 @@
 import { Router } from "express"
-import {
-  getAllContacts,
-  getOneContact,
-  postContact,
-  deleteContact,
-  putContact,
-  updateStatusContact,
-} from "../../controllers/contacts"
+import ContactsController from "../../controllers/contacts"
 import {
   validateId,
   validateCreate,
@@ -18,20 +11,24 @@ import guard from "../../middlewares/guard"
 
 const router = new Router()
 
-router.get("/", [guard, validateQuery], getAllContacts)
+router.get("/", [guard, validateQuery], ContactsController.getAllContacts)
 
-router.get("/:id", [guard, validateId], getOneContact)
+router.get("/:id", [guard, validateId], ContactsController.getOneContact)
 
-router.post("/", [guard, validateCreate], postContact)
+router.post("/", [guard, validateCreate], ContactsController.postContact)
 
-router.delete("/:id", [guard, validateId], deleteContact)
+router.delete("/:id", [guard, validateId], ContactsController.deleteContact)
 
-router.put("/:id", [guard, validateId, validateUpdate], putContact)
+router.put(
+  "/:id",
+  [guard, validateId, validateUpdate],
+  ContactsController.putContact
+)
 
 router.patch(
   "/:id/favorite",
   [guard, validateId, validateUpdateFavorite],
-  updateStatusContact
+  ContactsController.putContact
 )
 
 export default router
