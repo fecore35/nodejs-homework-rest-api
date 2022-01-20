@@ -1,10 +1,10 @@
-import { createUser } from "../../repository/user"
+import { createUser } from "../../repository/users"
 
-class UserService {
+class UsersService {
   async create(body) {
     const { id, email, avatarURL } = await createUser(body)
     return { id, email, avatarURL }
   }
 }
 
-export default new UserService()
+export default new UsersService()

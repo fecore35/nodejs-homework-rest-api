@@ -1,6 +1,6 @@
 import { HttpCode } from "../../lib/contacts"
 import AuthService from "../../service/auth"
-import UserService from "../../service/user"
+import UsersService from "../../service/users"
 
 class AuthController {
   async signup(req, res, _next) {
@@ -14,7 +14,7 @@ class AuthController {
       })
     }
 
-    const data = await UserService.create(req.body)
+    const data = await UsersService.create(req.body)
 
     res.status(HttpCode.CREATED).json({
       status: "success",
@@ -59,7 +59,11 @@ class AuthController {
     res.status(HttpCode.OK).json({
       status: "success",
       code: HttpCode.OK,
-      data: { email: user.email, subscription: user.subscription },
+      data: {
+        email: user.email,
+        subscription: user.subscription,
+        avatarURL: user.avatarURL,
+      },
     })
   }
 }
