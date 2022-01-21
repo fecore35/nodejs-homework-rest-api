@@ -5,6 +5,7 @@ import UserController from "../../../controllers/users"
 
 const router = new Router()
 
+router.get("/verify/:verificationToken", UserController.verify)
 router.patch(
   "/avatars",
   [guard, upload.single("avatar")],

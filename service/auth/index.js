@@ -12,7 +12,7 @@ class AuthService {
     const user = await findByEmail(email)
     const isValidPassword = await user?.isValidPassword(password)
 
-    if (!isValidPassword) {
+    if (!isValidPassword || !user?.isVerify) {
       return null
     }
 

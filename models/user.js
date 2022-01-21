@@ -1,4 +1,5 @@
 import pkg from "mongoose"
+import { randomUUID } from "crypto"
 import bcrypt from "bcryptjs"
 import gravatar from "gravatar/"
 const { Schema, model } = pkg
@@ -23,6 +24,10 @@ const userSchema = new Schema(
       enum: ["starter", "pro", "business"],
       default: "starter",
     },
+    name: {
+      type: String,
+      default: "Guest",
+    },
     token: {
       type: String,
       default: null,
@@ -32,6 +37,14 @@ const userSchema = new Schema(
       default: function () {
         return gravatar.url(this.email, { s: "250" }, true)
       },
+    },
+    isVerify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      default: randomUUID(),
     },
   },
   {
