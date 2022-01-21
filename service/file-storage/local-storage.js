@@ -1,6 +1,6 @@
 import path from "path"
 import fs from "fs/promises"
-import { updateAvatar } from "../../repository/users"
+import repositoryUsers from "../../repository/users"
 
 class LocalStorage {
   constructor(file, user) {
@@ -17,7 +17,7 @@ class LocalStorage {
     const avatarUrl = path.normalize(
       path.join(this.folderAvatars, this.userId, this.filename)
     )
-    await updateAvatar(this.userId, avatarUrl)
+    await repositoryUsers.updateAvatar(this.userId, avatarUrl)
     return avatarUrl
   }
 }
