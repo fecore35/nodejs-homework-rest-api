@@ -1,6 +1,7 @@
 import { HttpCode } from "../../lib/contacts"
 import AuthService from "../../service/auth"
 import UsersService from "../../service/users"
+import { EmailService, SenderSendGrig } from "../../service/email"
 
 class AuthController {
   async signup(req, res, _next) {
@@ -14,12 +15,27 @@ class AuthController {
       })
     }
 
-    const data = await UsersService.create(req.body)
+    const { id, name, avatarURL, verificationToken } =
+      await UsersService.create(req.body)
+    const emailService = new EmailService(
+      process.env.NODE_ENV,
+      new SenderSendGrig()
+    )
+    const isSend = await emailService.sendVerifyEmail(
+      email,
+      name,
+      verificationToken
+    )
 
     res.status(HttpCode.CREATED).json({
       status: "success",
       code: HttpCode.CREATED,
-      data,
+      data: {
+        id: id,
+        email: email,
+        avatarURL: avatarURL,
+        isSendEmailVerify: isSend,
+      },
     })
   }
 
