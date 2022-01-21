@@ -5,6 +5,7 @@ import helmet from "helmet"
 
 import contactsRouter from "./routes/api/contacts"
 import authRouter from "./routes/api/auth"
+import userRouter from "./routes/api/users"
 
 const app = express()
 
@@ -14,8 +15,10 @@ app.use(helmet())
 app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json({ limit: 5000 }))
+app.use(express.static("public"))
 
 app.use("/api/auth", authRouter)
+app.use("/api/users", userRouter)
 app.use("/api/contacts", contactsRouter)
 
 app.use((req, res) => {
